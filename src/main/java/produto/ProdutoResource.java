@@ -1,6 +1,7 @@
 package produto;
 
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -26,6 +27,13 @@ public class ProdutoResource {
     public Response getProdutoById(@PathParam("id") Long id) {
         Produto produto = produtoRepository.findById(id);
         return Response.ok(produto).build();
+    }
+
+    @POST
+    @Transactional
+    public Response criarProduto(Produto produto) {
+        produtoRepository.persist(produto);
+        return Response.status(Response.Status.CREATED).entity(produto).build();
     }
 
     @DELETE

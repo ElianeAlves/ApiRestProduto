@@ -1,4 +1,4 @@
-package com.produto;
+package produto;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

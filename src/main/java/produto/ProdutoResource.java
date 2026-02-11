@@ -38,12 +38,15 @@ public class ProdutoResource {
 
     @DELETE
     @Path("/{id}")
+    @Transactional
     public Response deleteProduto(@PathParam("id") Long id) {
         Produto produto = produtoRepository.findById(id);
         if (produto == null) {
             return Response.status(Response.Status.NOT_FOUND).entity("Produto não encontrado").build();
         }
 
-        return Response.ok().entity("Produto detelado com sucesso!").build();
+        produtoRepository.delete(produto);
+
+        return Response.ok().entity("Produto deletado com sucesso!").build();
     }
 }

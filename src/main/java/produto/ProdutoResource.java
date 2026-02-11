@@ -31,9 +31,27 @@ public class ProdutoResource {
 
     @POST
     @Transactional
-    public Response criarProduto(Produto produto) {
+    public Response postProduto(Produto produto) {
         produtoRepository.persist(produto);
         return Response.status(Response.Status.CREATED).entity(produto).build();
+    }
+
+    @PUT
+    @Path("/{id}")
+    @Transactional
+    public Response putProduto(@PathParam("id") Long id, Produto produtoAtualizado) {
+
+        Produto produto = produtoRepository.findById(id);
+
+        if (produto == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        produto.setNome(produtoAtualizado.getNome());
+        produto.setQuantidade(produtoAtualizado.getQuantidade());
+        produto.setValor(produtoAtualizado.getValor());
+
+        return Response.ok(produto).build();
     }
 
     @DELETE

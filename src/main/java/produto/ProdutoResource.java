@@ -2,13 +2,14 @@ package produto;
 
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 import java.util.List;
 
-@Path("/produto")
+@Path("/produtos")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class ProdutoResource {
@@ -26,12 +27,16 @@ public class ProdutoResource {
     @Path("/{id}")
     public Response getProdutoById(@PathParam("id") Long id) {
         Produto produto = produtoRepository.findById(id);
+        if (produto == null) {
+            return Response.status(Response.Status.NOT_FOUND).entity("Produto não encontrado.").build();
+        }
         return Response.ok(produto).build();
     }
 
     @POST
     @Transactional
-    public Response postProduto(Produto produto) {
+    public Response postProduto(@Valid Produto produto) {
+        produto.setId(null);
         produtoRepository.persist(produto);
         return Response.status(Response.Status.CREATED).entity(produto).build();
     }
@@ -44,7 +49,7 @@ public class ProdutoResource {
         Produto produto = produtoRepository.findById(id);
 
         if (produto == null) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.NOT_FOUND).entity("Produto não encontrado.").build();
         }
 
         produto.setNome(produtoAtualizado.getNome());
@@ -60,11 +65,11 @@ public class ProdutoResource {
     public Response deleteProduto(@PathParam("id") Long id) {
         Produto produto = produtoRepository.findById(id);
         if (produto == null) {
-            return Response.status(Response.Status.NOT_FOUND).entity("Produto não encontrado").build();
+            return Response.status(Response.Status.NOT_FOUND).entity("Produto não encontrado.").build();
         }
 
         produtoRepository.delete(produto);
 
-        return Response.ok().entity("Produto deletado com sucesso!").build();
+        return Response.noContent().build();
     }
 }

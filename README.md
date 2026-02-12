@@ -1,12 +1,35 @@
-# apirest
+# 🚀 ApiRest
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+A ApiRest é uma API REST simples para gerenciamento de produtos.
 
-If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
+O projeto permite realizar operações básicas de CRUD:
 
-## Running the application in dev mode
+✅ Criar produtos
 
-You can run your application in dev mode that enables live coding using:
+✅ Listar produtos
+
+✅ Buscar produto por ID
+
+✅ Atualizar produtos
+
+✅ Remover produtos
+
+A API foi desenvolvida utilizando:
+
+Quarkus 3
+
+Hibernate ORM com Panache
+
+PostgreSQL
+
+Swagger / OpenAPI
+
+O objetivo do projeto é demonstrar a construção de uma API REST utilizando boas práticas de desenvolvimento com Quarkus.
+
+
+## Subindo a aplicação no modo dev
+
+Você pode executar sua aplicação em modo de desenvolvimento, que permite recarga automática (live coding), usando:
 
 ```shell script
 ./mvnw quarkus:dev
@@ -35,50 +58,10 @@ If you want to build an _über-jar_, execute the following command:
 
 The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
 
-## Creating a native executable
+## Guias de Extensões Relacionadas
 
-You can create a native executable using:
+- REST com Jackson ([guia](https://quarkus.io/guides/rest)): Implementação moderna de Jakarta REST no Quarkus, com processamento em tempo de build e integração com Jackson para conversão automática entre objetos Java e JSON.
+- JDBC Driver - PostgreSQL ([guia](https://quarkus.io/guides/datasource)): Permite conectar ao banco de dados PostgreSQL utilizando JDBC, com suporte a pool de conexões e integração com o Hibernate ORM.
+- Hibernate ORM com Panache ([guia](https://quarkus.io/guides/hibernate-orm-panache)): Simplifica o código de persistência usando Hibernate ORM, através do padrão Active Record ou Repository Pattern.
+- OpenAPI / Swagger (SmallRye OpenAPI) ([guia](https://quarkus.io/extensions/io.quarkus/quarkus-smallrye-openapi/)): Gera automaticamente a documentação da API REST e disponibiliza a interface Swagger UI para testes interativos dos endpoints.
 
-```shell script
-./mvnw package -Dnative
-```
-
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
-
-```shell script
-./mvnw package -Dnative -Dquarkus.native.container-build=true
-```
-
-You can then execute your native executable with: `./target/apirest-1.0.0-SNAPSHOT-runner`
-
-If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
-
-## Related Guides
-
-- REST ([guide](https://quarkus.io/guides/rest)): A Jakarta REST implementation utilizing build time processing and Vert.x. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on it.
-- Hibernate ORM with Panache ([guide](https://quarkus.io/guides/hibernate-orm-panache)): Simplify your persistence code for Hibernate ORM via the active record or the repository pattern
-- RESTEasy Classic ([guide](https://quarkus.io/guides/resteasy)): REST endpoint framework implementing Jakarta REST and more
-- JDBC Driver - PostgreSQL ([guide](https://quarkus.io/guides/datasource)): Connect to the PostgreSQL database via JDBC
-
-## Provided Code
-
-### Hibernate ORM
-
-Create your first JPA entity
-
-[Related guide section...](https://quarkus.io/guides/hibernate-orm)
-
-[Related Hibernate with Panache section...](https://quarkus.io/guides/hibernate-orm-panache)
-
-
-### REST
-
-Easily start your REST Web Services
-
-[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
-
-### RESTEasy JAX-RS
-
-Easily start your RESTful Web Services
-
-[Related guide section...](https://quarkus.io/guides/getting-started#the-jax-rs-resources)

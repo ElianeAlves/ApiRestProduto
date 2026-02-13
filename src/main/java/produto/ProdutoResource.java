@@ -6,8 +6,8 @@ import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import produto.dto.ProdutoRequest;
-import produto.dto.ProdutoResponse;
+import produto.dto.ProdutoRequestDTO;
+import produto.dto.ProdutoResponseDTO;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,10 +21,10 @@ public class ProdutoResource {
     private ProdutoRepository produtoRepository;
 
     @GET
-    public List<ProdutoResponse> getProdutos() {
+    public List<ProdutoResponseDTO> getProdutos() {
         return produtoRepository.listAll()
                 .stream()
-                .map(ProdutoResponse::toResponse)
+                .map(ProdutoResponseDTO::paraDTO)
                 .collect(Collectors.toList());
     }
 
@@ -37,18 +37,18 @@ public class ProdutoResource {
                     .entity("Produto não encontrado.")
                     .build();
         }
-        return Response.ok(ProdutoResponse.toResponse(produto)).build();
+        return Response.ok(ProdutoResponseDTO.paraDTO(produto)).build();
     }
 
     @POST
     @Transactional
-    public Response postProduto(@Valid ProdutoRequest request) {
+    public Response postProduto(@Valid ProdutoRequestDTO request) {
 
-        Produto produto = request.toEntity();
+        Produto produto = request.paraEntidade();
         produtoRepository.persist(produto);
 
         return Response.status(Response.Status.CREATED)
-                .entity(ProdutoResponse.toResponse(produto))
+                .entity(ProdutoResponseDTO.paraDTO(produto))
                 .build();
     }
 

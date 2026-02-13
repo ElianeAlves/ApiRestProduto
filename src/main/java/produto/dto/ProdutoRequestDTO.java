@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import produto.Produto;
 
-public class ProdutoRequest {
+public class ProdutoRequestDTO {
 
     @NotBlank
     public String nome;
@@ -18,7 +18,7 @@ public class ProdutoRequest {
     @Min(0)
     public Integer valor;
 
-    public Produto toEntity() {
+    public Produto paraEntidade() {
         Produto produto = new Produto();
         produto.setNome(this.nome);
         produto.setQuantidade(this.quantidade);
@@ -26,4 +26,3 @@ public class ProdutoRequest {
         return produto;
     }
 }
-

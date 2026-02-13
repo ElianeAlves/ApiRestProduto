@@ -6,8 +6,11 @@ import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import produto.dto.ProdutoRequest;
+import produto.dto.ProdutoResponse;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Path("/produtos")
 @Produces(MediaType.APPLICATION_JSON)
@@ -18,9 +21,11 @@ public class ProdutoResource {
     private ProdutoRepository produtoRepository;
 
     @GET
-    public Response getProdutos() {
-        List<Produto> produtos = produtoRepository.listAll();
-        return Response.ok(produtos).build();
+    public List<ProdutoResponse> getProdutos() {
+        return produtoRepository.listAll()
+                .stream()
+                .map(ProdutoResponse::toResponse)
+                .collect(Collectors.toList());
     }
 
     @GET
@@ -28,17 +33,23 @@ public class ProdutoResource {
     public Response getProdutoById(@PathParam("id") Long id) {
         Produto produto = produtoRepository.findById(id);
         if (produto == null) {
-            return Response.status(Response.Status.NOT_FOUND).entity("Produto não encontrado.").build();
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Produto não encontrado.")
+                    .build();
         }
-        return Response.ok(produto).build();
+        return Response.ok(ProdutoResponse.toResponse(produto)).build();
     }
 
     @POST
     @Transactional
-    public Response postProduto(@Valid Produto produto) {
-        produto.setId(null);
+    public Response postProduto(@Valid ProdutoRequest request) {
+
+        Produto produto = request.toEntity();
         produtoRepository.persist(produto);
-        return Response.status(Response.Status.CREATED).entity(produto).build();
+
+        return Response.status(Response.Status.CREATED)
+                .entity(ProdutoResponse.toResponse(produto))
+                .build();
     }
 
     @PUT
@@ -63,12 +74,9 @@ public class ProdutoResource {
     @Path("/{id}")
     @Transactional
     public Response deleteProduto(@PathParam("id") Long id) {
-        Produto produto = produtoRepository.findById(id);
-        if (produto == null) {
+        if (!produtoRepository.deleteById(id)) {
             return Response.status(Response.Status.NOT_FOUND).entity("Produto não encontrado.").build();
         }
-
-        produtoRepository.delete(produto);
 
         return Response.noContent().build();
     }

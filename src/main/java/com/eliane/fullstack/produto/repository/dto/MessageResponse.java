@@ -1,4 +1,4 @@
-package produto.dto;
+package com.eliane.fullstack.produto.repository.dto;
 
 public class MessageResponse {
 

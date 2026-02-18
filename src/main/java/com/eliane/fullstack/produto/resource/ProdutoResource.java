@@ -1,4 +1,4 @@
-package produto;
+package com.eliane.fullstack.produto.resource;
 
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -6,9 +6,10 @@ import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import produto.dto.ProdutoRequestDTO;
-import produto.dto.ProdutoResponseDTO;
-import produto.exception.NotFoundExceptionMapper;
+import com.eliane.fullstack.produto.repository.entity.Produto;
+import com.eliane.fullstack.produto.repository.dto.ProdutoRequestDTO;
+import com.eliane.fullstack.produto.repository.dto.ProdutoResponseDTO;
+import com.eliane.fullstack.produto.repository.ProdutoRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,11 +35,7 @@ public class ProdutoResource {
     @Path("/{id}")
     public Response getProdutoById(@PathParam("id") Long id) {
         Produto produto = produtoRepository.findById(id);
-        if (produto == null) {
-            return Response.status(Response.Status.NOT_FOUND)
-                    .entity("Produto não encontrado.")
-                    .build();
-        }
+        if (produto == null) throw new NotFoundException("Produto não encontrado");
         return Response.ok(ProdutoResponseDTO.paraDTO(produto)).build();
     }
 

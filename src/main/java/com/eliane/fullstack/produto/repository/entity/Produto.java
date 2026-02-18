@@ -1,4 +1,4 @@
-package produto;
+package com.eliane.fullstack.produto.repository.entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "produto")
+@Table(name = "com/eliane/fullstack/produto")
 @Data
 @Builder
 @AllArgsConstructor

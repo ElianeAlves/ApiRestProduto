@@ -1,6 +1,6 @@
-package produto.dto;
+package com.eliane.fullstack.produto.repository.dto;
 
-import produto.Produto;
+import com.eliane.fullstack.produto.repository.entity.Produto;
 
 public class ProdutoResponseDTO {
     public Long id;

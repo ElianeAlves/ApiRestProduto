@@ -1,10 +1,10 @@
-package produto.exception;
+package com.eliane.fullstack.exception;
 
 import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
 import jakarta.ws.rs.ext.Provider;
-import produto.dto.MessageResponse;
+import com.eliane.fullstack.produto.repository.dto.MessageResponse;
 
 @Provider
 public class NotFoundExceptionMapper implements ExceptionMapper<NotFoundException> {

@@ -1,9 +1,9 @@
-package produto.dto;
+package com.eliane.fullstack.produto.repository.dto;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import produto.Produto;
+import com.eliane.fullstack.produto.repository.entity.Produto;
 
 public class ProdutoRequestDTO {
 

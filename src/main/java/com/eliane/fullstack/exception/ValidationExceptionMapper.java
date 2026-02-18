@@ -1,4 +1,4 @@
-package produto;
+package com.eliane.fullstack.exception;
 
 import jakarta.validation.ConstraintViolationException;
 import jakarta.ws.rs.core.Response;

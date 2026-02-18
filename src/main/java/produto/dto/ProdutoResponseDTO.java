@@ -9,11 +9,11 @@ public class ProdutoResponseDTO {
     public Integer valor;
 
     public static ProdutoResponseDTO paraDTO(Produto produto) {
-        ProdutoResponseDTO response = new ProdutoResponseDTO();
-        response.id = produto.getId();
-        response.nome = produto.getNome();
-        response.quantidade = produto.getQuantidade();
-        response.valor = produto.getValor();
-        return response;
+        ProdutoResponseDTO dto = new ProdutoResponseDTO();
+        dto.id = produto.getId();
+        dto.nome = produto.getNome();
+        dto.quantidade = produto.getQuantidade();
+        dto.valor = produto.getValor();
+        return dto;
     }
 }

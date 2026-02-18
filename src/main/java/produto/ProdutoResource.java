@@ -43,7 +43,6 @@ public class ProdutoResource {
     @POST
     @Transactional
     public Response postProduto(@Valid ProdutoRequestDTO request) {
-
         Produto produto = request.paraEntidade();
         produtoRepository.persist(produto);
 
@@ -56,7 +55,6 @@ public class ProdutoResource {
     @Path("/{id}")
     @Transactional
     public Response putProduto(@PathParam("id") Long id, Produto produtoAtualizado) {
-
         Produto produto = produtoRepository.findById(id);
 
         if (produto == null) {

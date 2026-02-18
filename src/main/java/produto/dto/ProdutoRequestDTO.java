@@ -7,15 +7,15 @@ import produto.Produto;
 
 public class ProdutoRequestDTO {
 
-    @NotBlank
+    @NotBlank(message = "O nome do produto é obrigatório")
     public String nome;
 
-    @NotNull
-    @Min(0)
+    @NotNull(message = "A quantidade é obrigatória")
+    @Min(value = 1, message = "A quantidade não pode ser negativa")
     public Integer quantidade;
 
-    @NotNull
-    @Min(0)
+    @NotNull(message = "O valor é obrigatório")
+    @Min(value = 1, message = "O valor não pode ser negativo")
     public Integer valor;
 
     public Produto paraEntidade() {

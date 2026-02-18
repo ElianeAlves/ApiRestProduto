@@ -8,6 +8,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import produto.dto.ProdutoRequestDTO;
 import produto.dto.ProdutoResponseDTO;
+import produto.exception.NotFoundExceptionMapper;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,6 +23,7 @@ public class ProdutoResource {
 
     @GET
     public List<ProdutoResponseDTO> getProdutos() {
+
         return produtoRepository.listAll()
                 .stream()
                 .map(ProdutoResponseDTO::paraDTO)
@@ -57,9 +59,7 @@ public class ProdutoResource {
     public Response putProduto(@PathParam("id") Long id, Produto produtoAtualizado) {
         Produto produto = produtoRepository.findById(id);
 
-        if (produto == null) {
-            return Response.status(Response.Status.NOT_FOUND).entity("Produto não encontrado.").build();
-        }
+        if (produto == null) throw new NotFoundException("Produto não encontrado");
 
         produto.setNome(produtoAtualizado.getNome());
         produto.setQuantidade(produtoAtualizado.getQuantidade());
@@ -72,10 +72,19 @@ public class ProdutoResource {
     @Path("/{id}")
     @Transactional
     public Response deleteProduto(@PathParam("id") Long id) {
-        if (!produtoRepository.deleteById(id)) {
-            return Response.status(Response.Status.NOT_FOUND).entity("Produto não encontrado.").build();
+        if (!produtoRepository.deleteById(id)) throw new NotFoundException("Produto não encontrado");
+        return Response.noContent().build();
+    }
+
+    @DELETE
+    @Transactional
+    public Response deleteVariosProdutos(@QueryParam("id") List<Long> ids) {
+        if(ids ==null || ids.isEmpty()) {
+            return Response.status(Response.Status.BAD_REQUEST).entity("A lista de IDS não pode estar vazia.").build();
         }
 
-        return Response.noContent().build();
+        Long registrosDeletados = produtoRepository.delete("id in ?1", ids);
+
+        return Response.ok("Deletados:" + registrosDeletados).build();
     }
 }
